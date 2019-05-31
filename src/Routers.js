@@ -1,10 +1,9 @@
 /**
- * @file RNRF 路由管理
- * @date 2018/6/1 9:44
+ * @file 路由管理
+ * @date 2019/5/31 11:07
  * @author ZWW
- * @lastModify ZWW 2019/3/25 14:28
+ * @lastModify ZWW 2019/5/31 11:07
  */
-
 "use strict";
 import React, {Component} from "react";
 import {Actions, Router, Scene} from "react-native-router-flux";
@@ -32,7 +31,7 @@ class routers extends Component {
      */
     backAndroidHandler() {
         const scene = Actions.currentScene; //获取当前路由
-        if(scene == 'spreadPage' || scene =='spreadPage'){//设置开屏广告界面不可点击
+        if(scene == 'spreadPage' || scene =='spreadPage'){//屏蔽开屏广告Back键
             return true;
         }
     }
