@@ -1,2 +1,3 @@
 *.pbxproj -text
 *.js linguist-language=React-Native
+*.java linguist-language=Java
