@@ -10,7 +10,7 @@ import {RCTSpreadView, RCTVideoView} from '../rct'
 import {Actions} from "react-native-router-flux";
 
 const {width, height} = Dimensions.get('window');
-
+const posId="VIDEOxddx4ijkljxl";
 export default class BannerPage extends Component<Props> {
     constructor(props) {
         super(props);
@@ -34,6 +34,7 @@ export default class BannerPage extends Component<Props> {
                     <Text style={{color: "#00f", fontSize: 20}}>视频广告</Text>
                 </View>
                 <RCTVideoView style={{width: width, height: 200}} isGetVideo={this.state.isGetVideo}
+                              posId={posId}
                 />
             </View>
 
