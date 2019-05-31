@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">AdViewBID</string>
+    <string name="back">返回</string>
+    <string name="code">代码布局</string>
+    <string name="mixture">混合布局</string>
+    <string name="req_banner">换一条</string>
+    <string name="req_instal">展示插屏广告</string>
+    <string name="req_native">展示原生广告</string>
+    <string name="req_video">展示视频广告</string>
+    <string name="instal">请求插屏广告</string>
+    <string name="banner">请求横幅广告</string>
+    <string name="natives">请求原生广告</string>
+    <string name="video">请求视频广告</string>
+</resources>
