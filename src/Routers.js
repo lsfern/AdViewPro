@@ -27,7 +27,7 @@ class routers extends Component {
 
     /**
      * Android 返回键
-     * @returns {boolean}
+     * @returns {boolean} - true：不可点击
      */
     backAndroidHandler() {
         const scene = Actions.currentScene; //获取当前路由
