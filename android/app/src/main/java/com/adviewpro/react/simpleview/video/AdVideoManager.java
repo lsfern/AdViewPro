@@ -1,12 +1,13 @@
-package com.adviewpro.video;
+package com.adviewpro.react.simpleview.video;
 
 import android.content.Context;
 import android.widget.Toast;
 
-import com.adviewpro.utils.PermissionUtil;
+import com.adviewpro.MainActivity;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.yanzhenjie.permission.AndPermission;
 
 /**
  * 视频广告管理
@@ -30,14 +31,18 @@ public class AdVideoManager extends SimpleViewManager<AdVideoView> {
         if (!isGetVideo) {
             return;
         }
-        int level = PermissionUtil.getInstance().checkNeedPermission(mContext);
-        if (level == 0) {
-            adVideoView.getVideo();
-        } else {
-            Toast.makeText(mContext, "permission not allow", Toast.LENGTH_SHORT).show();
-        }
+        AndPermission.with(mContext).runtime().permission(MainActivity.permissions)
+                .onGranted(allow -> {
+                    adVideoView.getVideo();
+                })
+                .onDenied(denied -> {
+                    Toast.makeText(mContext, "权限被拒绝", Toast.LENGTH_SHORT).show();
+                }).start();
     }
-
+    @ReactProp(name = "posId")
+    public void setPosId(AdVideoView adVideoView, String posId) {
+        adVideoView.setPosId(posId);
+    }
 //    @Nullable
 //    @Override
 //    public Map<String, Object> getExportedCustomDirectEventTypeConstants() {

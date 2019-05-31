@@ -1,12 +1,10 @@
-package com.adviewpro.video;
+package com.adviewpro.react.simpleview.video;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.adviewpro.MainActivity;
 import com.facebook.react.bridge.ReactContext;
@@ -17,7 +15,7 @@ import com.kuaiyou.loader.loaderInterface.AdViewVideoListener;
 public class AdVideoView extends LinearLayout implements AdViewVideoListener {
     private Context mContext;
     private AdViewVideoManager adViewVideoManager = null;
-    public static final String POSID = "VIDEOxddx4ijkljxl";
+    private String mPosId = "";
 
     public AdVideoView(Context context) {
         this(context, null);
@@ -28,32 +26,23 @@ public class AdVideoView extends LinearLayout implements AdViewVideoListener {
         init(context);
     }
 
-
     private void init(Context context) {
         this.mContext = context;
     }
 
     public void getVideo() {
-        adViewVideoManager = new AdViewVideoManager(MainActivity.activity, MainActivity.APPID, POSID, this, false);
+        adViewVideoManager = new AdViewVideoManager(MainActivity.activity, MainActivity.APPID, mPosId, this, false);
         adViewVideoManager.setVideoOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         adViewVideoManager.setVideoBackgroungColor("#000000");
     }
 
-    @Override
-    public void requestLayout() {
-        super.requestLayout();
-        reLayout();
+    /**
+     * 设置广告位Id
+     * @param posId 广告位Id
+     */
+    public void setPosId(String posId) {
+        mPosId = posId;
     }
-
-    public void reLayout() {
-        if (getWidth() > 0 && getHeight() > 0) {
-            int w = MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY);
-            int h = MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY);
-            measure(w, h);
-            layout(getPaddingLeft() + getLeft(), getPaddingTop() + getTop(), getWidth() + getPaddingLeft() + getLeft(), getHeight() + getPaddingTop() + getTop());
-        }
-    }
-
 
     @Override
     public void onReceivedVideo(String s) {
@@ -116,5 +105,20 @@ public class AdVideoView extends LinearLayout implements AdViewVideoListener {
                 "onVideoFinished",
                 null
         );
+    }
+
+    @Override
+    public void requestLayout() {
+        super.requestLayout();
+        reLayout();
+    }
+
+    public void reLayout() {
+        if (getWidth() > 0 && getHeight() > 0) {
+            int w = MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY);
+            int h = MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY);
+            measure(w, h);
+            layout(getPaddingLeft() + getLeft(), getPaddingTop() + getTop(), getWidth() + getPaddingLeft() + getLeft(), getHeight() + getPaddingTop() + getTop());
+        }
     }
 }

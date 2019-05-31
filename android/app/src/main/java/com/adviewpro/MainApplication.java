@@ -2,17 +2,16 @@ package com.adviewpro;
 
 import android.app.Application;
 
-import com.adviewpro.banner.AdBannerReactPackage;
-import com.adviewpro.insert.AdInsertReactPackage;
-import com.adviewpro.proto.AdNativeReactPackage;
-import com.adviewpro.spread.AdSpreadReactPackage;
-import com.adviewpro.video.AdVideoReactPackage;
+import com.adviewpro.react.simpleview.banner.AdBannerReactPackage;
+import com.adviewpro.react.simpleview.insert.AdInsertReactPackage;
+import com.adviewpro.react.simpleview.proto.AdNativeReactPackage;
+import com.adviewpro.react.simpleview.spread.AdSpreadReactPackage;
+import com.adviewpro.react.simpleview.video.AdVideoReactPackage;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.kuaiyou.loader.InitSDKManager;
 
 import java.util.Arrays;
 import java.util.List;

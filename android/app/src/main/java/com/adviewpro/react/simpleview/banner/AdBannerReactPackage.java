@@ -1,6 +1,5 @@
-package com.adviewpro.spread;
+package com.adviewpro.react.simpleview.banner;
 
-import com.adviewpro.banner.AdBannerManager;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -13,7 +12,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 
-public class AdSpreadReactPackage implements ReactPackage {
+public class AdBannerReactPackage implements ReactPackage {
     @Nonnull
     @Override
     public List<NativeModule> createNativeModules(@Nonnull ReactApplicationContext reactContext) {
@@ -23,6 +22,6 @@ public class AdSpreadReactPackage implements ReactPackage {
     @Nonnull
     @Override
     public List<ViewManager> createViewManagers(@Nonnull ReactApplicationContext reactContext) {
-        return Arrays.asList(new AdSpreadManager());
+        return Arrays.asList(new AdBannerManager());
     }
 }

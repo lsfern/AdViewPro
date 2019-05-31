@@ -1,4 +1,4 @@
-package com.adviewpro.spread;
+package com.adviewpro.react.simpleview.spread;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -21,6 +21,7 @@ import com.kuaiyou.loader.loaderInterface.AdViewSpreadListener;
 
 public class AdSpreadView extends LinearLayout implements AdViewSpreadListener {
     private Context mContext;
+    private View view;
     private int count = -1;
     private AdViewSpreadManager adSpreadBIDView = null;
 
@@ -36,33 +37,18 @@ public class AdSpreadView extends LinearLayout implements AdViewSpreadListener {
 
     private void init(Context context) {
         this.mContext = context;
-        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_normal, this);
+        view = LayoutInflater.from(mContext).inflate(R.layout.layout_normal, this);
     }
 
     public void getSpread() {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_normal, this);
         adSpreadBIDView = new AdViewSpreadManager(MainActivity.activity, MainActivity.APPID,
-                findViewById(R.id.spread_layout));
+                view.findViewById(R.id.spread_layout));
 
         adSpreadBIDView.setLogo(R.drawable.logo);
         adSpreadBIDView.setBackgroundColor(Color.WHITE);
         adSpreadBIDView.setSpreadNotifyType(AdViewSpreadManager.NOTIFY_COUNTER_NUM);
 
         adSpreadBIDView.setOnAdViewListener(this);
-    }
-    @Override
-    public void requestLayout() {
-        super.requestLayout();
-        reLayout();
-    }
-
-    public void reLayout() {
-        if (getWidth() > 0 && getHeight() > 0) {
-            int w = MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY);
-            int h = MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY);
-            measure(w, h);
-            layout(getPaddingLeft() + getLeft(), getPaddingTop() + getTop(), getWidth() + getPaddingLeft() + getLeft(), getHeight() + getPaddingTop() + getTop());
-        }
     }
 
 
@@ -136,12 +122,28 @@ public class AdSpreadView extends LinearLayout implements AdViewSpreadListener {
         adSpreadBIDView.getParentLayout().addView(tv1, tvLp);
         btn1.setVisibility(View.INVISIBLE);
     }
-    private void sendEvent(){
+
+    private void sendEvent() {
         ReactContext reactContext = (ReactContext) getContext();
         reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
                 getId(),//native和js两个视图会依据getId()而关联在一起
                 "onSpreadClose",//事件名称
                 null
         );
+    }
+
+    @Override
+    public void requestLayout() {
+        super.requestLayout();
+        reLayout();
+    }
+
+    public void reLayout() {
+        if (getWidth() > 0 && getHeight() > 0) {
+            int w = MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY);
+            int h = MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY);
+            measure(w, h);
+            layout(getPaddingLeft() + getLeft(), getPaddingTop() + getTop(), getWidth() + getPaddingLeft() + getLeft(), getHeight() + getPaddingTop() + getTop());
+        }
     }
 }

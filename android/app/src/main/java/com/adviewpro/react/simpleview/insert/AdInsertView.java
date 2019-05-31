@@ -1,24 +1,15 @@
-package com.adviewpro.insert;
+package com.adviewpro.react.simpleview.insert;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.adviewpro.MainActivity;
-import com.adviewpro.R;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.kuaiyou.loader.AdViewInstlManager;
-import com.kuaiyou.loader.AdViewSpreadManager;
 import com.kuaiyou.loader.loaderInterface.AdViewInstlListener;
-import com.kuaiyou.loader.loaderInterface.AdViewSpreadListener;
 
 public class AdInsertView extends LinearLayout implements AdViewInstlListener {
     private Context mContext;
@@ -36,7 +27,6 @@ public class AdInsertView extends LinearLayout implements AdViewInstlListener {
 
     private void init(Context context) {
         this.mContext = context;
-        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_normal, this);
     }
 
     public void getInsert() {
@@ -44,22 +34,6 @@ public class AdInsertView extends LinearLayout implements AdViewInstlListener {
 		adInstlBIDView.setDisplayMode(AdViewInstlManager.DISPLAYMODE_DIALOG);
         adInstlBIDView.setOnAdViewListener(this);
     }
-
-    @Override
-    public void requestLayout() {
-        super.requestLayout();
-        reLayout();
-    }
-
-    public void reLayout() {
-        if (getWidth() > 0 && getHeight() > 0) {
-            int w = MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY);
-            int h = MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY);
-            measure(w, h);
-            layout(getPaddingLeft() + getLeft(), getPaddingTop() + getTop(), getWidth() + getPaddingLeft() + getLeft(), getHeight() + getPaddingTop() + getTop());
-        }
-    }
-
 
     @Override
     public void onAdClicked() {
@@ -102,9 +76,24 @@ public class AdInsertView extends LinearLayout implements AdViewInstlListener {
     private void sendEvent(){
         ReactContext reactContext = (ReactContext) getContext();
         reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                getId(),//native和js两个视图会依据getId()而关联在一起
-                "onInsertClose",//事件名称
+                getId(),
+                "onInsertClose",
                 null
         );
+    }
+
+    @Override
+    public void requestLayout() {
+        super.requestLayout();
+        reLayout();
+    }
+
+    public void reLayout() {
+        if (getWidth() > 0 && getHeight() > 0) {
+            int w = MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY);
+            int h = MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY);
+            measure(w, h);
+            layout(getPaddingLeft() + getLeft(), getPaddingTop() + getTop(), getWidth() + getPaddingLeft() + getLeft(), getHeight() + getPaddingTop() + getTop());
+        }
     }
 }

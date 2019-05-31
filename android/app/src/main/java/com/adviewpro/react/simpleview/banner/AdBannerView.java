@@ -1,11 +1,10 @@
-package com.adviewpro.banner;
+package com.adviewpro.react.simpleview.banner;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -34,7 +33,7 @@ public class AdBannerView extends LinearLayout implements AdViewBannerListener {
 
     private void init(Context context) {
         this.mContext = context;
-        if (null == view){
+        if (null == view) {
             view = LayoutInflater.from(context).inflate(R.layout.activity_main, null, true);
         }
 
@@ -52,7 +51,6 @@ public class AdBannerView extends LinearLayout implements AdViewBannerListener {
         int top = 0;
         for (int i = 0; i < childCount; i++) {
             View view = getChildAt(i);
-
             view.layout(l + top, t, top + l + 60, t + 60);
             top = top + 70;
         }
@@ -60,11 +58,9 @@ public class AdBannerView extends LinearLayout implements AdViewBannerListener {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-// TODO Auto-generated method stub
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         final int count = getChildCount();
         for (int i = 0; i < count; i++) {
-            //这个很重要，没有就不显示
             getChildAt(i).measure(widthMeasureSpec, heightMeasureSpec);
         }
     }
@@ -99,12 +95,11 @@ public class AdBannerView extends LinearLayout implements AdViewBannerListener {
 
     @Override
     public void onAdReceived() {
-        Toast.makeText(mContext, "收到了", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onAdFailedReceived(String error) {
-        Toast.makeText(mContext, "" + error, Toast.LENGTH_SHORT).show();
     }
 
     @Override

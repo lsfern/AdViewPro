@@ -1,13 +1,14 @@
-package com.adviewpro.spread;
+package com.adviewpro.react.simpleview.spread;
 
 import android.content.Context;
 import android.widget.Toast;
 
-import com.adviewpro.utils.PermissionUtil;
+import com.adviewpro.MainActivity;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.yanzhenjie.permission.AndPermission;
 
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import javax.annotation.Nullable;
  */
 public class AdSpreadManager extends SimpleViewManager<AdSpreadView> {
     private Context mContext;
+
     @Override
     public String getName() {
         return "RCTAdSpreadView";
@@ -34,12 +36,13 @@ public class AdSpreadManager extends SimpleViewManager<AdSpreadView> {
         if (!isGetSpread) {
             return;
         }
-        int level = PermissionUtil.getInstance().checkNeedPermission(mContext);
-        if (level == 0) {
-            spreadView.getSpread();
-        } else {
-            Toast.makeText(mContext, "permission not allow", Toast.LENGTH_SHORT).show();
-        }
+        AndPermission.with(mContext).runtime().permission(MainActivity.permissions)
+                .onGranted(allow -> {
+                    spreadView.getSpread();
+                })
+                .onDenied(denied -> {
+                    Toast.makeText(mContext, "权限被拒绝", Toast.LENGTH_SHORT).show();
+                }).start();
     }
 
     @Nullable

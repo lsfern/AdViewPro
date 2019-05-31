@@ -1,13 +1,14 @@
-package com.adviewpro.proto;
+package com.adviewpro.react.simpleview.proto;
 
 import android.content.Context;
 import android.widget.Toast;
 
-import com.adviewpro.utils.PermissionUtil;
+import com.adviewpro.MainActivity;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.yanzhenjie.permission.AndPermission;
 
 import java.util.Map;
 
@@ -35,12 +36,13 @@ public class AdNativeManager extends SimpleViewManager<AdNativeView> {
         if (!isGetNative) {//可以重置当前的广告实例
             return;
         }
-        int level = PermissionUtil.getInstance().checkNeedPermission(mContext);
-        if (level == 0) {
-            adNativeView.getNative();
-        } else {
-            Toast.makeText(mContext, "permission not allow", Toast.LENGTH_SHORT).show();
-        }
+        AndPermission.with(mContext).runtime().permission(MainActivity.permissions)
+                .onGranted(allow -> {
+                    adNativeView.getNative();
+                })
+                .onDenied(denied -> {
+                    Toast.makeText(mContext, "权限被拒绝", Toast.LENGTH_SHORT).show();
+                }).start();
     }
 
     @ReactProp(name = "posId")

@@ -1,4 +1,4 @@
-package com.adviewpro.video;
+package com.adviewpro.react.simpleview.video;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;

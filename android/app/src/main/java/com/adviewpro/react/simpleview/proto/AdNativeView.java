@@ -1,4 +1,4 @@
-package com.adviewpro.proto;
+package com.adviewpro.react.simpleview.proto;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
